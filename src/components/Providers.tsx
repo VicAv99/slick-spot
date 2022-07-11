@@ -1,9 +1,12 @@
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { setCookie } from 'cookies-next';
+import { Session } from 'next-auth';
+import { SessionProvider } from 'next-auth/react';
 import React, { PropsWithChildren, useState } from 'react';
 
 interface ProvidersProps {
   colorScheme: ColorScheme;
+  session: Session;
 }
 
 export const Providers = ({
@@ -37,7 +40,9 @@ export const Providers = ({
           colorScheme,
         }}
       >
-        {children}
+        <SessionProvider session={props.session} refetchInterval={0}>
+          {children}
+        </SessionProvider>
       </MantineProvider>
     </ColorSchemeProvider>
   );

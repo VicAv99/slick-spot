@@ -2,13 +2,16 @@ import '../styles/globals.css';
 
 import { ColorScheme } from '@mantine/core';
 import { getCookie } from 'cookies-next';
+import { Session } from 'next-auth';
 import App, { AppProps } from 'next/app';
 import Head from 'next/head';
 
 import { Layout } from '../components/Layout';
 import { Providers } from '../components/Providers';
 
-export default function SCApp(props: AppProps & { colorScheme: ColorScheme }) {
+export default function SCApp(
+  props: AppProps & { colorScheme: ColorScheme; session: Session }
+) {
   const { Component, pageProps } = props;
 
   return (
@@ -21,7 +24,7 @@ export default function SCApp(props: AppProps & { colorScheme: ColorScheme }) {
         />
       </Head>
 
-      <Providers colorScheme={pageProps?.colorScheme}>
+      <Providers session={props.session} colorScheme={pageProps?.colorScheme}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
