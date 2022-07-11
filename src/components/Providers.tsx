@@ -3,6 +3,9 @@ import { setCookie } from 'cookies-next';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
 import React, { PropsWithChildren, useState } from 'react';
+import { Provider as ReduxProvider } from 'react-redux';
+
+import store from '../utils/state';
 
 interface ProvidersProps {
   colorScheme: ColorScheme;
@@ -41,7 +44,7 @@ export const Providers = ({
         }}
       >
         <SessionProvider session={props.session} refetchInterval={0}>
-          {children}
+          <ReduxProvider store={store}>{children}</ReduxProvider>
         </SessionProvider>
       </MantineProvider>
     </ColorSchemeProvider>

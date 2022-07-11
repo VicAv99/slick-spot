@@ -5,6 +5,8 @@ import React, { PropsWithChildren, useState } from 'react';
 import { useEffect } from 'react';
 
 import Login from '../pages/login';
+import { useAppDispatch } from '../utils/state/hooks';
+import { fetchPlaylists } from '../utils/state/playlists/playlists.actions';
 import { Header } from './Header';
 import { Player } from './player/Player';
 import { SideNav } from './SideNav';
@@ -19,16 +21,24 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
   const [sidebarOpened, setSidebarOpened] = useState(!isLargerScreen);
   const bodyHeight = isLargerScreen ? 130 : 80;
 
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (session) {
+      dispatch(fetchPlaylists(session));
+    }
+  }, [session?.user?.email]);
+
   useEffect(() => {
     setSidebarOpened(!isLargerScreen);
   }, [isLargerScreen]);
 
-  if (!session || session.status === "unauthenticated") {
-    return <Login />;
+  if (session?.status === "loading") {
+    return <div>Loading...</div>;
   }
 
-  if (session.status === "loading") {
-    return <div>Loading...</div>;
+  if (!session || session.status === "unauthenticated") {
+    return <Login />;
   }
 
   return (

@@ -9,6 +9,7 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
+import { signOut } from 'next-auth/react';
 import React from 'react';
 import { ChevronLeft, ChevronRight, MoonStars, Sun, UserCircle } from 'tabler-icons-react';
 
@@ -24,6 +25,7 @@ export const Header = (props: HeaderProps) => {
   const ThemeIcon = colorScheme === "dark" ? Sun : MoonStars;
   const toggleTheme = () => toggleColorScheme();
   const leftPosition = props.largerScreen ? 0 : 250;
+  const logout = () => signOut();
 
   return (
     <MTHeader
@@ -60,6 +62,7 @@ export const Header = (props: HeaderProps) => {
           </Group>
           <Group className="h-full" px={20} position="right">
             <Badge
+              onClick={logout}
               sx={{ paddingLeft: 0 }}
               size="xl"
               radius="xl"
