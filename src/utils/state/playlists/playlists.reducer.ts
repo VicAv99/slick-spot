@@ -1,19 +1,6 @@
-import { createAsyncThunk, createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import { fetchSpot } from '../api-utils/fetch-spot';
-
-// import { fetchPlaylists } from './playlists.actions';
-
-export const fetchPlaylists = createAsyncThunk(
-  "playlists/fetchPlaylists",
-  async (session: any) => {
-    const response = await fetchSpot(
-      `/users/${session.user.sub}/playlists`,
-      session
-    );
-    return response.items;
-  }
-);
+import { fetchPlaylistsFulfilled, fetchPlaylistsPending, fetchPlaylistsRejected } from './playlists.actions';
 
 const playlistsAdapter = createEntityAdapter<any>({
   selectId: (playlist) => playlist.id,
@@ -21,7 +8,7 @@ const playlistsAdapter = createEntityAdapter<any>({
 
 const initialState = playlistsAdapter.getInitialState({
   loading: false,
-  selectedPlaylist: null,
+  selectedPlaylistId: null,
   error: "",
 });
 
@@ -29,24 +16,21 @@ export const playlistSlice = createSlice({
   name: "playlists",
   initialState,
   reducers: {
-    // fetchPlaylists: playlistsAdapter.setAll,
-    addPlaylist: playlistsAdapter.addOne,
-    removePlaylist: playlistsAdapter.removeOne,
-    updatePlaylist: playlistsAdapter.updateOne,
-    setSelectedPlaylist: (state, action) => {
-      state.selectedPlaylist = action.payload;
-    },
+    setSelectedPlaylist: (state, action) => ({
+      ...state,
+      selectedPlaylistId: action.payload,
+    }),
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPlaylists.pending, (state) => ({
+      .addCase(fetchPlaylistsPending, (state) => ({
         ...state,
         loading: true,
       }))
-      .addCase(fetchPlaylists.fulfilled, (state, { payload }) => {
+      .addCase(fetchPlaylistsFulfilled, (state, { payload }) => {
         return playlistsAdapter.setAll({ ...state, loading: false }, payload);
       })
-      .addCase(fetchPlaylists.rejected, (state, { error }) => ({
+      .addCase(fetchPlaylistsRejected, (state, { error }) => ({
         ...state,
         loading: false,
         error: error.message ?? "",

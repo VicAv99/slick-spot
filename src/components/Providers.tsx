@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import React, { PropsWithChildren, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import store from '../utils/state';
+import { store } from '../utils/state/store';
 
 interface ProvidersProps {
   colorScheme: ColorScheme;
