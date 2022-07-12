@@ -44,7 +44,7 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
   return (
     <>
       <AppShell
-        padding="md"
+        fixed
         navbar={<SideNav sidebarOpened={sidebarOpened} />}
         header={
           <Header
@@ -55,7 +55,7 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
         }
         footer={<Player />}
         styles={(theme) => ({
-          body: { height: `calc(100vh - ${bodyHeight}px)` },
+          body: { height: `100%` },
           main: {
             backgroundColor:
               theme.colorScheme === "dark"
@@ -64,7 +64,7 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
           },
         })}
       >
-        <div className="mt-[60px]">{children}</div>
+        <div className="h-full">{children}</div>
       </AppShell>
     </>
   );

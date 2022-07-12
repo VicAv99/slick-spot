@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import { fetchPlaylistsFulfilled, fetchPlaylistsPending, fetchPlaylistsRejected } from './playlists.actions';
+import { fetchPlaylists } from './playlists.actions';
 
 const playlistsAdapter = createEntityAdapter<any>({
   selectId: (playlist) => playlist.id,
@@ -23,14 +23,14 @@ export const playlistSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPlaylistsPending, (state) => ({
+      .addCase(fetchPlaylists.pending, (state) => ({
         ...state,
         loading: true,
       }))
-      .addCase(fetchPlaylistsFulfilled, (state, { payload }) => {
+      .addCase(fetchPlaylists.fulfilled, (state, { payload }) => {
         return playlistsAdapter.setAll({ ...state, loading: false }, payload);
       })
-      .addCase(fetchPlaylistsRejected, (state, { error }) => ({
+      .addCase(fetchPlaylists.rejected, (state, { error }) => ({
         ...state,
         loading: false,
         error: error.message ?? "",

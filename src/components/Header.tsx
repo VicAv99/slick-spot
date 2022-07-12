@@ -11,7 +11,7 @@ import {
 } from '@mantine/core';
 import { signOut } from 'next-auth/react';
 import React from 'react';
-import { ChevronLeft, ChevronRight, MoonStars, Sun, UserCircle } from 'tabler-icons-react';
+import { FiChevronLeft, FiChevronRight, FiMoon, FiSun, FiUser } from 'react-icons/fi';
 
 interface HeaderProps {
   largerScreen: boolean;
@@ -22,7 +22,7 @@ interface HeaderProps {
 export const Header = (props: HeaderProps) => {
   const theme = useMantineTheme();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
-  const ThemeIcon = colorScheme === "dark" ? Sun : MoonStars;
+  const ThemeIcon = colorScheme === "dark" ? FiSun : FiMoon;
   const toggleTheme = () => toggleColorScheme();
   const leftPosition = props.largerScreen ? 0 : 250;
   const logout = () => signOut();
@@ -54,10 +54,10 @@ export const Header = (props: HeaderProps) => {
         <Group className="h-full" px={20} position="apart">
           <Group className="h-full" px={20} position="left">
             <ActionIcon color="dark" size="lg" radius="xl" variant="outline">
-              <ChevronLeft color="teal" />
+              <FiChevronLeft size={25} color="teal" />
             </ActionIcon>
             <ActionIcon color="dark" size="lg" radius="xl" variant="outline">
-              <ChevronRight color="teal" />
+              <FiChevronRight size={25} color="teal" />
             </ActionIcon>
           </Group>
           <Group className="h-full" px={20} position="right">
@@ -67,9 +67,7 @@ export const Header = (props: HeaderProps) => {
               size="xl"
               radius="xl"
               color="dark"
-              leftSection={
-                <UserCircle color="teal" strokeWidth={1} size={30} />
-              }
+              leftSection={<FiUser color="teal" strokeWidth={1} size={30} />}
             >
               <Text variant="text" size="md">
                 username

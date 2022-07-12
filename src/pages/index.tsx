@@ -1,7 +1,26 @@
+import { Grid, Title } from '@mantine/core';
+import { useSession } from 'next-auth/react';
 import Head from 'next/head';
+import { useEffect } from 'react';
+
+import { TrackCard } from '../components/TrackCard';
+import { greeting } from '../utils/greeting';
+import { useAppDispatch, useAppSelector } from '../utils/state/hooks';
+import { fetchTracks } from '../utils/state/tracks/tracks.actions';
+import { selectTracks } from '../utils/state/tracks/tracks.reducer';
 
 import type { NextPage } from "next";
 const Home: NextPage = () => {
+  const dispatch = useAppDispatch();
+  const { data: session } = useSession();
+  const tracks = useAppSelector((state) => selectTracks(state.tracks));
+
+  useEffect(() => {
+    if (session) {
+      dispatch(fetchTracks(session));
+    }
+  }, [session?.user?.email]);
+
   return (
     <>
       <Head>
@@ -9,7 +28,21 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div>stuff</div>
+      <div className="">
+        <Title order={2}>Hello! {greeting()}!</Title>
+
+        <Title order={2}>Recently Played</Title>
+
+        <Grid className="max-w-full" gutter="sm" mt={10}>
+          {tracks.map((track) => {
+            return (
+              <Grid.Col key={track.id} sm={4} md={3}>
+                <TrackCard track={track} />
+              </Grid.Col>
+            );
+          })}
+        </Grid>
+      </div>
     </>
   );
 };

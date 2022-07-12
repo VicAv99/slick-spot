@@ -21,7 +21,13 @@ export const SideNav = (props: SideNavProps) => {
   return (
     <>
       {props.sidebarOpened && (
-        <Navbar height="calc(100vh - 100px)" width={{ base: 250 }} p="sm">
+        <Navbar
+          fixed
+          position={{ top: 1, bottom: 1010 }}
+          width={{ base: 250 }}
+          p="sm"
+          height="calc(100% - 60px)"
+        >
           <Navbar.Section mt="xs">
             <Title px="sm" className="whitespace-nowrap" order={2}>
               Slick Spot

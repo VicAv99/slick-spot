@@ -12,7 +12,3 @@ export const fetchPlaylists = createAsyncThunk(
     return response.items;
   }
 );
-
-export const fetchPlaylistsPending = fetchPlaylists.pending;
-export const fetchPlaylistsFulfilled = fetchPlaylists.fulfilled;
-export const fetchPlaylistsRejected = fetchPlaylists.rejected;
