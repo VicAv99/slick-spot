@@ -19,7 +19,6 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
   const smallBreak = theme.breakpoints.sm;
   const isLargerScreen = useMediaQuery(`(max-width:${smallBreak}px)`, false);
   const [sidebarOpened, setSidebarOpened] = useState(!isLargerScreen);
-  const bodyHeight = isLargerScreen ? 130 : 80;
 
   const dispatch = useAppDispatch();
 
@@ -45,7 +44,12 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
     <>
       <AppShell
         fixed
-        navbar={<SideNav sidebarOpened={sidebarOpened} />}
+        navbar={
+          <SideNav
+            sidebarOpened={sidebarOpened}
+            setSidebarOpened={setSidebarOpened}
+          />
+        }
         header={
           <Header
             largerScreen={isLargerScreen}

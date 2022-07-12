@@ -1,4 +1,4 @@
-import { Divider, Navbar, ScrollArea, Title } from '@mantine/core';
+import { Burger, Divider, Navbar, ScrollArea, Title, useMantineTheme } from '@mantine/core';
 import React from 'react';
 
 import { useAppSelector } from '../utils/state/hooks';
@@ -7,9 +7,11 @@ import { SideNavListItem } from './SideNavListItem';
 
 interface SideNavProps {
   sidebarOpened: boolean;
+  setSidebarOpened: (sidebarOpened: (o: boolean) => boolean) => void;
 }
 
 export const SideNav = (props: SideNavProps) => {
+  const theme = useMantineTheme();
   const playlists = useAppSelector((state) => selectPlaylists(state.playlists));
   const links = [
     { label: "Home" },
@@ -28,10 +30,17 @@ export const SideNav = (props: SideNavProps) => {
           p="sm"
           height="calc(100% - 60px)"
         >
-          <Navbar.Section mt="xs">
+          <Navbar.Section className="flex justify-between items-center" mt="xs">
             <Title px="sm" className="whitespace-nowrap" order={2}>
               Slick Spot
             </Title>
+            <Burger
+              opened={props.sidebarOpened}
+              onClick={() => props.setSidebarOpened((o) => !o)}
+              size="sm"
+              color={theme.colors.gray[6]}
+              mr="xl"
+            />
           </Navbar.Section>
 
           <Navbar.Section mt="xs">
