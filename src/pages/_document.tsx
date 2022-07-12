@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import { createGetInitialProps } from '@mantine/next';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 
@@ -13,6 +14,7 @@ export default class _Document extends Document {
         <body>
           <Main />
           <NextScript />
+          <script src="https://sdk.scdn.co/spotify-player.js"></script>
         </body>
       </Html>
     );

@@ -6,10 +6,10 @@ import { fetchSpot } from '../api-utils/fetch-spot';
 export const fetchTracks = createAsyncThunk(
   "[TRACKS] Fetch Tracks",
   async (session: AppSession) => {
-    const response = await fetchSpot<{ track: Track }>(
-      `/me/player/recently-played`,
-      session
-    );
-    return response.items.map(({ track }) => track);
+    const response = await (
+      await fetchSpot(`/me/player/recently-played`, session)
+    ).json();
+
+    return response.items.map(({ track }: { track: Track }) => track);
   }
 );

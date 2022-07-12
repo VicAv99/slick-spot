@@ -30,6 +30,8 @@
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
     "@types/react-redux": "^7.1.24",
+    "@types/spotify-api": "^0.0.16",
+    "@types/spotify-web-playback-sdk": "^0.1.12",
     "autoprefixer": "^10.4.7",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",

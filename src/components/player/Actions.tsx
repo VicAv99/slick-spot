@@ -1,15 +1,29 @@
 import { ActionIcon, Box, Slider } from '@mantine/core';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiMic, FiVolume2 } from 'react-icons/fi';
+
+import { useAsync } from '../../utils/use-async';
 
 interface PlayerActionsProps {
   isLargerScreen: boolean;
+  player: Spotify.Player;
 }
 
 export const PlayerActions = (props: PlayerActionsProps) => {
+  const { value: defVolume, execute } = useAsync(
+    props.player?.getVolume,
+    false
+  );
   const classes = `flex items-center ${
     props.isLargerScreen ? "justify-between" : "justify-end"
   }`;
+
+  useEffect(() => {
+    if (!props.player) return;
+    execute();
+  }, [execute, props.player]);
+
+  console.log(defVolume);
 
   return (
     <Box className={classes}>
@@ -21,7 +35,11 @@ export const PlayerActions = (props: PlayerActionsProps) => {
           <FiVolume2 className="ml-px" size={15} color="gray" />
         </ActionIcon>
         <Slider
-          className={`w-[${props.isLargerScreen ? "100px" : "150px"}]`}
+          min={0}
+          max={1}
+          step={0.1}
+          value={defVolume ?? 0}
+          className={`w-[160px]`}
           size="xs"
           color="teal"
           marks={[{ value: 50 }]}
