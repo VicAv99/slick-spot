@@ -15,7 +15,7 @@ interface LayoutProps {}
 
 export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
   const theme = useMantineTheme();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const smallBreak = theme.breakpoints.sm;
   const isLargerScreen = useMediaQuery(`(max-width:${smallBreak}px)`, false);
   const [sidebarOpened, setSidebarOpened] = useState(!isLargerScreen);
@@ -32,11 +32,11 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
     setSidebarOpened(!isLargerScreen);
   }, [isLargerScreen]);
 
-  if (session?.status === "loading") {
+  if (status === "loading") {
     return <div>Loading...</div>;
   }
 
-  if (!session || session.status === "unauthenticated") {
+  if (status === "unauthenticated" || !session) {
     return <Login />;
   }
 

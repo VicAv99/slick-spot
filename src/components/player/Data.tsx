@@ -15,7 +15,7 @@ export const PlayerData = (props: PlayerDataProps) => {
     props.isLargerScreen ? "justify-between" : "justify-start"
   }`;
 
-  if (!props.track.name) return <Box className={classes} />;
+  if (!props.track?.name) return <Box className={classes} />;
 
   return (
     <Box className={classes}>

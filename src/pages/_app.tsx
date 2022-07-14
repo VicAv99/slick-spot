@@ -5,15 +5,16 @@ import { getCookie } from 'cookies-next';
 import { Session } from 'next-auth';
 import App, { AppProps } from 'next/app';
 import Head from 'next/head';
+import { useEffect } from 'react';
 
 import { Layout } from '../components/Layout';
 import { Providers } from '../components/Providers';
 
-export default function SCApp(
-  props: AppProps & { colorScheme: ColorScheme; session: Session }
-) {
-  const { Component, pageProps } = props;
-
+export default function SCApp({
+  Component,
+  pageProps,
+  ...props
+}: AppProps & { colorScheme: ColorScheme; session: Session }) {
   return (
     <>
       <Head>
