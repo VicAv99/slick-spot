@@ -1,14 +1,15 @@
-/// <reference types="node" />
 import { Footer, Progress, SimpleGrid, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { Track } from '../../utils/models';
+import { fetchSpot } from '../../utils/state/api-utils/fetch-spot';
 import { PlayerActions } from './Actions';
 import { PlayerControls } from './Controls';
 import { PlayerData } from './Data';
 
+/// <reference types="node" />
 const track = {
   name: "",
   album: {
@@ -23,11 +24,10 @@ export const Player = () => {
   const smallBreak = theme.breakpoints.sm;
   const isLargerScreen = useMediaQuery(`(max-width:${smallBreak}px)`, false);
 
-  const [is_paused, setPaused] = useState(false);
-  const [is_active, setActive] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [active, setActive] = useState(false);
+  const [currentTrack, setCurrentTrack] = useState<Partial<Track>>(track);
   const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
-  const [current_track, setTrack] = useState<Partial<Track>>(track);
-  const [id, setId] = useState("");
 
   const waitForPlayer = useCallback(async (): Promise<typeof Spotify> => {
     (window as any).onSpotifyWebPlaybackSDKReady = () => {};
@@ -56,25 +56,26 @@ export const Player = () => {
     setPlayer(spotPlayer);
 
     spotPlayer.addListener("ready", async ({ device_id }: any) => {
-      console.log({ device_id });
-      setId(device_id);
+      setTimeout(async () => {
+        await fetchSpot("/me/player", session, "PUT", {
+          device_ids: [device_id],
+          play: false,
+        });
+      }, 1000);
     });
 
     spotPlayer.addListener("not_ready", ({ device_id }: any) => {
       console.log("Device ID has gone offline", device_id);
     });
 
-    spotPlayer.addListener("player_state_changed", (state: any) => {
-      if (!state) {
-        return;
-      }
+    spotPlayer.addListener("player_state_changed", async (state: any) => {
+      if (!state) return;
 
-      setTrack(state.track_window.current_track);
+      setCurrentTrack(state.track_window.current_track);
       setPaused(state.paused);
-      console.log(state);
 
       spotPlayer.getCurrentState().then((state: any) => {
-        !state ? setActive(false) : setActive(true);
+        setActive(!!state);
       });
     });
     spotPlayer.connect();
@@ -100,8 +101,8 @@ export const Player = () => {
           spacing="xs"
           breakpoints={[{ maxWidth: smallBreak, cols: 1 }]}
         >
-          <PlayerData track={current_track} isLargerScreen={isLargerScreen} />
-          <PlayerControls isPaused={is_paused} player={player} />
+          <PlayerData track={currentTrack} isLargerScreen={isLargerScreen} />
+          <PlayerControls isPaused={paused} player={player} />
           <PlayerActions
             player={player ?? ({} as Spotify.Player)}
             isLargerScreen={isLargerScreen}
