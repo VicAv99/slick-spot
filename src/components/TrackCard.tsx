@@ -3,7 +3,7 @@ import { useHover } from '@mantine/hooks';
 import React from 'react';
 import { FiPlay } from 'react-icons/fi';
 
-import { Track } from '../utils/models';
+import { Track } from '../utils';
 
 interface TrackCard {
   track: Track;

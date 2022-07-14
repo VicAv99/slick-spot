@@ -4,10 +4,10 @@ import Head from 'next/head';
 import { useEffect } from 'react';
 
 import { TrackCard } from '../components/TrackCard';
-import { greeting } from '../utils/greeting';
-import { useAppDispatch, useAppSelector } from '../utils/state/hooks';
-import { fetchTracks } from '../utils/state/tracks/tracks.actions';
-import { selectTracks } from '../utils/state/tracks/tracks.reducer';
+import { useAppDispatch, useAppSelector } from '../state/state.models';
+import { fetchTracks } from '../state/tracks/tracks.actions';
+import { selectTracks } from '../state/tracks/tracks.reducer';
+import { greeting } from '../utils';
 
 import type { NextPage } from "next";
 const Home: NextPage = () => {

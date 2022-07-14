@@ -5,8 +5,8 @@ import React, { PropsWithChildren, useState } from 'react';
 import { useEffect } from 'react';
 
 import Login from '../pages/login';
-import { useAppDispatch } from '../utils/state/hooks';
-import { fetchPlaylists } from '../utils/state/playlists/playlists.actions';
+import { fetchPlaylists } from '../state/playlists/playlists.actions';
+import { useAppDispatch } from '../state/state.models';
 import { Header } from './Header';
 import { Player } from './player/Player';
 import { SideNav } from './SideNav';

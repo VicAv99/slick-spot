@@ -3,8 +3,8 @@ import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
+import { fetchSpot } from '../../utils';
 import { Track } from '../../utils/models';
-import { fetchSpot } from '../../utils/state/api-utils/fetch-spot';
 import { PlayerActions } from './Actions';
 import { PlayerControls } from './Controls';
 import { PlayerData } from './Data';

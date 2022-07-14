@@ -1,6 +1,6 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 
-import { Track } from '../../models';
+import { Track } from '../../utils';
 import { fetchTracks } from './tracks.actions';
 
 interface TrackState {

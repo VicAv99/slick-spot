@@ -5,7 +5,7 @@ import { SessionProvider } from 'next-auth/react';
 import React, { PropsWithChildren, useEffect, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
 
-import { store } from '../utils/state/store';
+import { store } from '../state/store';
 import { AuthWrapper } from './AuthWrapper';
 
 interface ProvidersProps {

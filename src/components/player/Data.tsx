@@ -3,7 +3,7 @@ import React from 'react';
 import { FiHeart } from 'react-icons/fi';
 import { MdPictureInPicture } from 'react-icons/md';
 
-import { Track } from '../../utils/models';
+import { Track } from '../../utils';
 
 interface PlayerDataProps {
   isLargerScreen: boolean;

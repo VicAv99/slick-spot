@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { isAuthenticated } from '../../is-authenticated';
-import { fetchSpot } from '../api-utils/fetch-spot';
+import { fetchSpot, isAuthenticated } from '../../utils';
 
 export const fetchPlaylists = createAsyncThunk(
   "playlists/fetchPlaylists",

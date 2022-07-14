@@ -1,8 +1,8 @@
 import { Burger, Divider, Navbar, ScrollArea, Title, useMantineTheme } from '@mantine/core';
 import React from 'react';
 
-import { useAppSelector } from '../utils/state/hooks';
-import { selectPlaylists } from '../utils/state/playlists/playlists.reducer';
+import { selectPlaylists } from '../state/playlists/playlists.reducer';
+import { useAppSelector } from '../state/state.models';
 import { SideNavListItem } from './SideNavListItem';
 
 interface SideNavProps {

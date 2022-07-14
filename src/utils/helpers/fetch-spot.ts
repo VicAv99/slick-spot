@@ -1,6 +1,6 @@
 import { Session } from 'next-auth';
 
-import { BASE_URL } from '../state.constants';
+import { BASE_URL } from '..';
 
 export const fetchSpot = async (
   url: string,

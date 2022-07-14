@@ -1,7 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-import { AppSession, Track } from '../../models';
-import { fetchSpot } from '../api-utils/fetch-spot';
+import { AppSession, fetchSpot, Track } from '../../utils';
 
 export const fetchTracks = createAsyncThunk(
   "[TRACKS] Fetch Tracks",

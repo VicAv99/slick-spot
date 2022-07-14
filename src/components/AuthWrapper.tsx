@@ -1,7 +1,7 @@
 import { signOut, useSession } from 'next-auth/react';
 import React, { PropsWithChildren, useEffect } from 'react';
 
-import { isAuthenticated } from '../utils/is-authenticated';
+import { isAuthenticated } from '../utils';
 
 export const AuthWrapper = ({ children }: PropsWithChildren<unknown>) => {
   const { data: session } = useSession();

@@ -2,7 +2,7 @@ import { ActionIcon, Box, Slider } from '@mantine/core';
 import React, { useEffect, useState } from 'react';
 import { FiMic, FiVolume2 } from 'react-icons/fi';
 
-import { useAsync } from '../../utils/use-async';
+import { useAsync } from '../../utils';
 
 interface PlayerActionsProps {
   isLargerScreen: boolean;
