@@ -9,9 +9,11 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import { signOut } from 'next-auth/react';
 import React from 'react';
 import { FiChevronLeft, FiChevronRight, FiMoon, FiSun, FiUser } from 'react-icons/fi';
+
+import { signOutFromApp } from '../state/auth/auth.actions';
+import { useAppDispatch } from '../state/state.models';
 
 interface HeaderProps {
   largerScreen: boolean;
@@ -20,12 +22,13 @@ interface HeaderProps {
 }
 
 export const Header = (props: HeaderProps) => {
+  const dispatch = useAppDispatch();
   const theme = useMantineTheme();
   const { colorScheme, toggleColorScheme } = useMantineColorScheme();
   const ThemeIcon = colorScheme === "dark" ? FiSun : FiMoon;
   const toggleTheme = () => toggleColorScheme();
   const leftPosition = props.largerScreen ? 0 : 250;
-  const logout = () => signOut();
+  const logout = () => dispatch(signOutFromApp());
 
   return (
     <MTHeader

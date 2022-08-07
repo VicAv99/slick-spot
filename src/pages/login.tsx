@@ -1,14 +1,13 @@
 import { AppShell, Button, Center, Header, MantineTheme, Title } from '@mantine/core';
-import { signIn, useSession } from 'next-auth/react';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
 import { FaSpotify } from 'react-icons/fa';
 
+import { signInWithSpotify } from '../state/auth/auth.actions';
+import { useAppDispatch } from '../state/state.models';
+
 export default function Login() {
-  const router = useRouter();
-  const { data: session } = useSession();
+  const dispatch = useAppDispatch();
   const handleLogin = () => {
-    signIn("spotify", { callbackUrl: "/", redirect: false });
+    dispatch(signInWithSpotify());
   };
   const shellBg = (theme: MantineTheme) => ({
     main: {
@@ -18,12 +17,6 @@ export default function Login() {
           : theme.colors.gray[0],
     },
   });
-
-  useEffect(() => {
-    if (session) {
-      router.push("/");
-    }
-  }, [session]);
 
   return (
     <AppShell fixed padding="md" styles={shellBg}>

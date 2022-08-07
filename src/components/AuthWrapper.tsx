@@ -12,7 +12,5 @@ export const AuthWrapper = ({ children }: PropsWithChildren<unknown>) => {
     }
   }, [session]);
 
-  console.log(session);
-
   return <>{children}</>;
 };
