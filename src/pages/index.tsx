@@ -6,20 +6,20 @@ import { useEffect } from 'react';
 import { TrackCard } from '../components/TrackCard';
 import { useAppDispatch, useAppSelector } from '../state/state.models';
 import { fetchTracks } from '../state/tracks/tracks.actions';
-import { selectTracks } from '../state/tracks/tracks.reducer';
+import { selectAllTracks } from '../state/tracks/tracks.selectors';
 import { greeting } from '../utils';
 
 import type { NextPage } from "next";
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
   const { data: session } = useSession();
-  const tracks = useAppSelector((state) => selectTracks(state.tracks));
+  const tracks = useAppSelector(selectAllTracks);
 
   useEffect(() => {
     if (session) {
       dispatch(fetchTracks(session));
     }
-  }, [session?.user?.email]);
+  }, [dispatch, session]);
 
   return (
     <>
