@@ -5,7 +5,6 @@ import { getCookie } from 'cookies-next';
 import { Session } from 'next-auth';
 import App, { AppProps } from 'next/app';
 import Head from 'next/head';
-import { useEffect } from 'react';
 
 import { Layout } from '../components/Layout';
 import { Providers } from '../components/Providers';

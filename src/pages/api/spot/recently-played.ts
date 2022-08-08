@@ -20,7 +20,7 @@ const recentlyPlayed = async (req: NextApiRequest, res: NextApiResponse) => {
   });
 
   const recentlyPlayedRes = await tracks.json();
-  const recentlyPlayedTracks = recentlyPlayedRes.items.map(
+  const recentlyPlayedTracks = recentlyPlayedRes.items?.map(
     ({ track }: { track: Track }) => track
   );
 
