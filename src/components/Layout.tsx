@@ -3,7 +3,7 @@ import { Player } from '@/components/player/Player';
 import { SideNav } from '@/components/SideNav';
 import Login from '@/pages/login';
 import { authActions, playlistActions, useAppDispatch } from '@/state';
-import { isAuthenticated } from '@/utils';
+import { sessionExpired } from '@/utils';
 import { AppShell, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
@@ -17,16 +17,17 @@ export const Layout = ({ children }: PropsWithChildren<unknown>) => {
 
   const dispatch = useAppDispatch();
   const { data: session, status } = useSession();
+  const expired = sessionExpired(session);
 
   useEffect(() => {
-    if (session || isAuthenticated(session)) return;
+    if (session || !expired) return;
     dispatch(authActions.signOutFromApp());
-  }, [dispatch, session]);
+  }, [dispatch, expired, session]);
 
   useEffect(() => {
-    if (!session || !isAuthenticated(session)) return;
+    if (expired) return;
     dispatch(playlistActions.fetchPlaylists());
-  }, [dispatch, session]);
+  }, [dispatch, expired]);
 
   useEffect(() => {
     setSidebarOpened(!isLargerScreen);
@@ -36,7 +37,7 @@ export const Layout = ({ children }: PropsWithChildren<unknown>) => {
     return <div>Loading...</div>;
   }
 
-  if (status === "unauthenticated" || !session || !isAuthenticated(session)) {
+  if (status === "unauthenticated" || !session || expired) {
     return <Login />;
   }
 
