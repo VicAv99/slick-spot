@@ -1,7 +1,6 @@
+import { AppSession } from '@/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-
-import { AppSession } from '../../../utils';
 
 const player = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = (await getSession({ req })) as AppSession;

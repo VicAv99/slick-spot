@@ -1,9 +1,7 @@
+import { Track } from '@/utils';
 import { ActionIcon, Box, Image, Text } from '@mantine/core';
-import React from 'react';
 import { FiHeart } from 'react-icons/fi';
 import { MdPictureInPicture } from 'react-icons/md';
-
-import { Track } from '../../utils';
 
 interface PlayerDataProps {
   isLargerScreen: boolean;

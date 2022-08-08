@@ -1,15 +1,10 @@
+import { PlayerActions, PlayerControls, PlayerData } from '@/components/player';
+import { AppSession, fetcher, Track } from '@/utils';
 import { Footer, Progress, SimpleGrid, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-import { fetcher } from '../../utils';
-import { AppSession, Track } from '../../utils/models';
-import { PlayerActions } from './Actions';
-import { PlayerControls } from './Controls';
-import { PlayerData } from './Data';
-
-/// <reference types="node" />
 const track = {
   name: "",
   album: {

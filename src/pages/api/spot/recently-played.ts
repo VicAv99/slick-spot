@@ -1,7 +1,6 @@
+import { AppSession, fetcher, Track } from '@/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-
-import { AppSession, fetcher, Track } from '../../../utils';
 
 const recentlyPlayed = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = (await getSession({ req })) as AppSession;

@@ -1,11 +1,10 @@
+import { store } from '@/state/store';
 import { ColorScheme, ColorSchemeProvider, MantineProvider } from '@mantine/core';
 import { setCookie } from 'cookies-next';
 import { Session } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
-import React, { PropsWithChildren, useState } from 'react';
+import { PropsWithChildren, useState } from 'react';
 import { Provider as ReduxProvider } from 'react-redux';
-
-import { store } from '../state/store';
 
 interface ProvidersProps {
   colorScheme: ColorScheme;

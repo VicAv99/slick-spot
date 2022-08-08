@@ -1,9 +1,7 @@
+import { Track } from '@/utils';
 import { ActionIcon, Card, Image, Text, Title, Transition, useMantineTheme } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
-import React from 'react';
 import { FiPlay } from 'react-icons/fi';
-
-import { Track } from '../utils';
 
 interface TrackCard {
   track: Track;

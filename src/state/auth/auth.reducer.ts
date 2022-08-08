@@ -1,6 +1,6 @@
+import { AppSession } from '@/utils';
 import { createSlice } from '@reduxjs/toolkit';
 
-import { AppSession } from '../../utils';
 import { hydrateToken, signInWithSpotify, signOutFromApp } from './auth.actions';
 
 interface AuthState {

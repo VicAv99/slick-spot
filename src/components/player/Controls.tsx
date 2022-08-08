@@ -1,5 +1,4 @@
 import { ActionIcon, Box } from '@mantine/core';
-import React from 'react';
 import { FiPause, FiPlay, FiRepeat, FiShuffle, FiSkipBack, FiSkipForward } from 'react-icons/fi';
 
 interface PlayerControls {

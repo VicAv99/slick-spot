@@ -1,21 +1,15 @@
+import { Header } from '@/components/Header';
+import { Player } from '@/components/player/Player';
+import { SideNav } from '@/components/SideNav';
+import Login from '@/pages/login';
+import { authActions, playlistActions, useAppDispatch } from '@/state';
+import { isAuthenticated } from '@/utils';
 import { AppShell, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
-import React, { PropsWithChildren, useState } from 'react';
-import { useEffect } from 'react';
+import { PropsWithChildren, useEffect, useState } from 'react';
 
-import Login from '../pages/login';
-import { signOutFromApp } from '../state/auth/auth.actions';
-import { fetchPlaylists } from '../state/playlists/playlists.actions';
-import { useAppDispatch } from '../state/state.models';
-import { isAuthenticated } from '../utils';
-import { Header } from './Header';
-import { Player } from './player/Player';
-import { SideNav } from './SideNav';
-
-interface LayoutProps {}
-
-export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
+export const Layout = ({ children }: PropsWithChildren<unknown>) => {
   const theme = useMantineTheme();
   const smallBreak = theme.breakpoints.sm;
   const isLargerScreen = useMediaQuery(`(max-width:${smallBreak}px)`, false);
@@ -26,12 +20,12 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
 
   useEffect(() => {
     if (session || isAuthenticated(session)) return;
-    dispatch(signOutFromApp());
+    dispatch(authActions.signOutFromApp());
   }, [dispatch, session]);
 
   useEffect(() => {
     if (!session || !isAuthenticated(session)) return;
-    dispatch(fetchPlaylists());
+    dispatch(playlistActions.fetchPlaylists());
   }, [dispatch, session]);
 
   useEffect(() => {

@@ -1,3 +1,4 @@
+import { authActions, useAppDispatch } from '@/state';
 import {
   ActionIcon,
   Badge,
@@ -9,11 +10,7 @@ import {
   useMantineColorScheme,
   useMantineTheme,
 } from '@mantine/core';
-import React from 'react';
 import { FiChevronLeft, FiChevronRight, FiMoon, FiSun, FiUser } from 'react-icons/fi';
-
-import { signOutFromApp } from '../state/auth/auth.actions';
-import { useAppDispatch } from '../state/state.models';
 
 interface HeaderProps {
   largerScreen: boolean;
@@ -28,7 +25,7 @@ export const Header = (props: HeaderProps) => {
   const ThemeIcon = colorScheme === "dark" ? FiSun : FiMoon;
   const toggleTheme = () => toggleColorScheme();
   const leftPosition = props.largerScreen ? 0 : 250;
-  const logout = () => dispatch(signOutFromApp());
+  const logout = () => dispatch(authActions.signOutFromApp());
 
   return (
     <MTHeader

@@ -1,8 +1,7 @@
+import { useAsync } from '@/utils';
 import { ActionIcon, Box, Slider } from '@mantine/core';
-import React, { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { FiMic, FiVolume2 } from 'react-icons/fi';
-
-import { useAsync } from '../../utils';
 
 interface PlayerActionsProps {
   isLargerScreen: boolean;

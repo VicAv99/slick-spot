@@ -1,13 +1,12 @@
-import '../styles/globals.css';
+import '@/styles/globals.css';
 
+import { Layout } from '@/components/Layout';
+import { Providers } from '@/components/Providers';
 import { ColorScheme } from '@mantine/core';
 import { getCookie } from 'cookies-next';
 import { Session } from 'next-auth';
 import App, { AppProps } from 'next/app';
 import Head from 'next/head';
-
-import { Layout } from '../components/Layout';
-import { Providers } from '../components/Providers';
 
 export default function SCApp({
   Component,

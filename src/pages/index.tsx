@@ -1,20 +1,17 @@
+import { TrackCard } from '@/components/TrackCard';
+import { trackActions, trackSelectors, useAppDispatch, useAppSelector } from '@/state';
+import { greeting } from '@/utils';
 import { Grid, Title } from '@mantine/core';
 import Head from 'next/head';
 import { useEffect } from 'react';
 
-import { TrackCard } from '../components/TrackCard';
-import { useAppDispatch, useAppSelector } from '../state/state.models';
-import { fetchTracks } from '../state/tracks/tracks.actions';
-import { selectAllTracks } from '../state/tracks/tracks.selectors';
-import { greeting } from '../utils';
-
 import type { NextPage } from "next";
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
-  const tracks = useAppSelector(selectAllTracks);
+  const tracks = useAppSelector(trackSelectors.selectAllTracks);
 
   useEffect(() => {
-    dispatch(fetchTracks());
+    dispatch(trackActions.fetchTracks());
   }, [dispatch]);
 
   return (

@@ -1,7 +1,6 @@
+import { AppSession, fetcher } from '@/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
-
-import { AppSession, fetcher } from '../../../utils';
 
 const playlists = async (req: NextApiRequest, res: NextApiResponse) => {
   const session = (await getSession({ req })) as AppSession;

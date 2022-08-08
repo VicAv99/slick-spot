@@ -1,13 +1,11 @@
+import { authActions, useAppDispatch } from '@/state';
 import { AppShell, Button, Center, Header, MantineTheme, Title } from '@mantine/core';
 import { FaSpotify } from 'react-icons/fa';
-
-import { signInWithSpotify } from '../state/auth/auth.actions';
-import { useAppDispatch } from '../state/state.models';
 
 export default function Login() {
   const dispatch = useAppDispatch();
   const handleLogin = () => {
-    dispatch(signInWithSpotify());
+    dispatch(authActions.signInWithSpotify());
   };
   const shellBg = (theme: MantineTheme) => ({
     main: {

@@ -1,4 +1,4 @@
-import { BASE_URL } from '..';
+import { BASE_URL } from '@/utils';
 
 type GenericObj = { [key: string]: any };
 type FetcherOpts = Partial<

@@ -1,6 +1,6 @@
+import { AppState } from '@/state';
 import { createSelector } from '@reduxjs/toolkit';
 
-import { AppState } from '../state.models';
 import { selectPlaylists } from './playlists.reducer';
 
 const selectPlaylistsFeature = (state: AppState) => state.playlists;

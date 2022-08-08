@@ -1,9 +1,6 @@
+import { SideNavListItem } from '@/components/SideNavListItem';
+import { playlistSelectors, useAppSelector } from '@/state';
 import { Burger, Divider, Navbar, ScrollArea, Title, useMantineTheme } from '@mantine/core';
-import React from 'react';
-
-import { selectAllPlaylists } from '../state/playlists/playlists.selectors';
-import { useAppSelector } from '../state/state.models';
-import { SideNavListItem } from './SideNavListItem';
 
 interface SideNavProps {
   sidebarOpened: boolean;
@@ -12,7 +9,7 @@ interface SideNavProps {
 
 export const SideNav = (props: SideNavProps) => {
   const theme = useMantineTheme();
-  const playlists = useAppSelector(selectAllPlaylists);
+  const playlists = useAppSelector(playlistSelectors.selectAllPlaylists);
   const links = [
     { label: "Home" },
     { label: "Search" },

@@ -1,7 +1,6 @@
+import { AppSession } from '@/utils';
 import { createAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { signIn, signOut } from 'next-auth/react';
-
-import { AppSession } from '../../utils';
 
 export const hydrateToken = createAction<AppSession | undefined>(
   "[AUTH Init] Hydrate Token"

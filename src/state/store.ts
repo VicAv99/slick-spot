@@ -17,7 +17,7 @@ const rootReducer: Reducer = (state: AppState, action: Action) => {
   return combinedReducer(state, action);
 };
 
-export function makeStore() {
+function makeStore() {
   return configureStore({
     reducer: rootReducer,
     preloadedState: {},

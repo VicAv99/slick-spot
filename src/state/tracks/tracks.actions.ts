@@ -1,6 +1,5 @@
+import { fetcher } from '@/utils';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-
-import { fetcher } from '../../utils';
 
 export const fetchTracks = createAsyncThunk(
   "[TRACKS] Fetch Tracks",
