@@ -42,8 +42,12 @@ interface AppUser {
   name?: string | null;
   email?: string | null;
   picture?: string | null;
-  image?: string | null;
+  sub?: string | null;
+  expires_at?: number | null;
   accessToken?: string | null;
+  iat?: number | null;
+  exp?: number | null;
+  jti?: number | null;
 }
 
 export interface AppSession extends Omit<DefaultSession, "user"> {

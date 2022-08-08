@@ -1,10 +1,10 @@
 import { Footer, Progress, SimpleGrid, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
-import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
-import { fetchSpot } from '../../utils';
-import { Track } from '../../utils/models';
+import { fetcher } from '../../utils';
+import { AppSession, Track } from '../../utils/models';
 import { PlayerActions } from './Actions';
 import { PlayerControls } from './Controls';
 import { PlayerData } from './Data';
@@ -57,9 +57,17 @@ export const Player = () => {
 
     spotPlayer.addListener("ready", async ({ device_id }: any) => {
       setTimeout(async () => {
-        await fetchSpot("/me/player", session, "PUT", {
-          device_ids: [device_id],
-          play: false,
+        await fetcher("/me/player", false, {
+          method: "PUT",
+          body: {
+            device_ids: [device_id],
+            play: false,
+          },
+          headers: {
+            Authorization: `Bearer ${
+              (session as AppSession)?.user?.accessToken ?? ""
+            }`,
+          },
         });
       }, 1000);
     });

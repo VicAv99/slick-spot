@@ -1,5 +1,4 @@
 import { Grid, Title } from '@mantine/core';
-import { useSession } from 'next-auth/react';
 import Head from 'next/head';
 import { useEffect } from 'react';
 
@@ -12,14 +11,11 @@ import { greeting } from '../utils';
 import type { NextPage } from "next";
 const Home: NextPage = () => {
   const dispatch = useAppDispatch();
-  const { data: session } = useSession();
   const tracks = useAppSelector(selectAllTracks);
 
   useEffect(() => {
-    if (session) {
-      dispatch(fetchTracks(session));
-    }
-  }, [dispatch, session]);
+    dispatch(fetchTracks());
+  }, [dispatch]);
 
   return (
     <>

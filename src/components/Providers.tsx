@@ -32,24 +32,24 @@ export const Providers = ({
   };
 
   return (
-    <ColorSchemeProvider
-      colorScheme={colorScheme}
-      toggleColorScheme={toggleColorScheme}
-    >
-      <MantineProvider
-        withGlobalStyles
-        withNormalizeCSS
-        theme={{
-          /** Put your mantine theme override here */
-          colorScheme,
-        }}
-      >
-        <SessionProvider session={props.session} refetchInterval={0}>
-          <ReduxProvider store={store}>
+    <SessionProvider session={props.session} refetchInterval={0}>
+      <ReduxProvider store={store}>
+        <ColorSchemeProvider
+          colorScheme={colorScheme}
+          toggleColorScheme={toggleColorScheme}
+        >
+          <MantineProvider
+            withGlobalStyles
+            withNormalizeCSS
+            theme={{
+              /** Put your mantine theme override here */
+              colorScheme,
+            }}
+          >
             <AuthWrapper>{children}</AuthWrapper>
-          </ReduxProvider>
-        </SessionProvider>
-      </MantineProvider>
-    </ColorSchemeProvider>
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </ReduxProvider>
+    </SessionProvider>
   );
 };

@@ -23,10 +23,8 @@ export const Layout = ({ children }: PropsWithChildren<LayoutProps>) => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (session) {
-      dispatch(fetchPlaylists(session));
-    }
-  }, [session?.user?.email]);
+    dispatch(fetchPlaylists());
+  }, []);
 
   useEffect(() => {
     setSidebarOpened(!isLargerScreen);
