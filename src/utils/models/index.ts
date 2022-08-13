@@ -36,6 +36,7 @@ export interface Track {
   artists: [Artist];
   duration_ms: number;
   preview_url: string;
+  uri: string;
 }
 
 interface AppUser {

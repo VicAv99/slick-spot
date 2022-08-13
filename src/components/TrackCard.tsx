@@ -1,6 +1,9 @@
-import { Track } from '@/utils';
+import { useAppDispatch } from '@/state';
+import { playRecentlyPlayedTrack } from '@/state/tracks/tracks.actions';
+import { AppSession, Track } from '@/utils';
 import { ActionIcon, Card, Image, Text, Title, Transition, useMantineTheme } from '@mantine/core';
 import { useHover } from '@mantine/hooks';
+import { useSession } from 'next-auth/react';
 import { FiPlay } from 'react-icons/fi';
 
 interface TrackCard {
@@ -8,6 +11,8 @@ interface TrackCard {
 }
 
 export const TrackCard = ({ track }: TrackCard) => {
+  const dispatch = useAppDispatch();
+  const { data: session } = useSession();
   const { hovered, ref } = useHover();
   const theme = useMantineTheme();
   const secondaryColor =
@@ -50,6 +55,14 @@ export const TrackCard = ({ track }: TrackCard) => {
             variant="filled"
             className="absolute top-[95px] right-2"
             style={styles}
+            onClick={() =>
+              dispatch(
+                playRecentlyPlayedTrack({
+                  uri: track.uri,
+                  accessToken: (session as AppSession)?.user?.accessToken ?? "",
+                })
+              )
+            }
           >
             <FiPlay className="ml-1" color="white" size={20} />
           </ActionIcon>

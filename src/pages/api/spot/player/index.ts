@@ -1,4 +1,4 @@
-import { AppSession } from '@/utils';
+import { AppSession, fetcher } from '@/utils';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 
@@ -13,6 +13,10 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 
   switch (req.method) {
+    case "PUT": {
+      await fetcher("/me/player/play", false);
+      res.status(200);
+    }
     default:
       res.setHeader("Allow", "[GET]");
       res.status(405).end(`Method ${req.method} Not Allowed`);
