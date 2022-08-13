@@ -17,7 +17,7 @@ export const Player = () => {
   const theme = useMantineTheme();
   const smallBreak = theme.breakpoints.sm;
   const isLargerScreen = useMediaQuery(`(max-width:${smallBreak}px)`, false);
-  const { currentTrack, paused, player } = useContext(PlayerContext);
+  const playerCtx = useContext(PlayerContext);
 
   return (
     <Footer height={isLargerScreen ? 180 : 80} px="md" pb="md">
@@ -29,12 +29,19 @@ export const Player = () => {
         breakpoints={[{ maxWidth: smallBreak, cols: 1 }]}
       >
         <PlayerData
-          track={currentTrack ?? {}}
+          track={playerCtx.currentTrack ?? {}}
           isLargerScreen={isLargerScreen}
         />
-        <PlayerControls isPaused={paused} player={player} />
+        <PlayerControls
+          isPaused={playerCtx.paused}
+          next={playerCtx.next}
+          previous={playerCtx.previous}
+          shuffle={playerCtx.shuffle}
+          tracks={playerCtx.tracks}
+          togglePlay={playerCtx.togglePlay}
+        />
         <PlayerActions
-          player={player ?? ({} as Spotify.Player)}
+          player={playerCtx.player ?? ({} as Spotify.Player)}
           isLargerScreen={isLargerScreen}
         />
       </SimpleGrid>

@@ -12,10 +12,13 @@ const track = {
 
 export const usePlayerContext = () => {
   const { data: session } = useSession();
-  const [paused, setPaused] = useState<boolean>(false);
+  const token = (session as AppSession)?.user?.accessToken ?? "";
   const [active, setActive] = useState<boolean>(false);
   const [currentTrack, setCurrentTrack] = useState<Partial<Track>>(track);
+  const [deviceId, setDeviceId] = useState<string>("");
+  const [paused, setPaused] = useState<boolean>(false);
   const [player, setPlayer] = useState<Spotify.Player | undefined>(undefined);
+  const [tracks, setTracks] = useState<Partial<[Track[], Track[]]>>([]);
 
   const waitForPlayer = useCallback(async (): Promise<typeof Spotify> => {
     (window as any).onSpotifyWebPlaybackSDKReady = () => {};
@@ -36,7 +39,7 @@ export const usePlayerContext = () => {
     const spotPlayer = new Player({
       name: "slick-tunes",
       getOAuthToken: (cb: any) => {
-        cb((session as any)?.user?.accessToken);
+        cb(token);
       },
       volume: 0.5,
     });
@@ -44,6 +47,7 @@ export const usePlayerContext = () => {
     setPlayer(spotPlayer);
 
     spotPlayer.addListener("ready", async ({ device_id }: any) => {
+      setDeviceId(device_id);
       setTimeout(async () => {
         await fetcher("/me/player", false, {
           method: "PUT",
@@ -52,9 +56,7 @@ export const usePlayerContext = () => {
             play: false,
           },
           headers: {
-            Authorization: `Bearer ${
-              (session as AppSession)?.user?.accessToken ?? ""
-            }`,
+            Authorization: `Bearer ${token}`,
           },
         });
       }, 1000);
@@ -67,7 +69,13 @@ export const usePlayerContext = () => {
     spotPlayer.addListener("player_state_changed", async (state: any) => {
       if (!state) return;
 
+      console.log({ state });
+
       setCurrentTrack(state.track_window.current_track);
+      setTracks([
+        state.track_window.previous_tracks,
+        state.track_window.next_tracks,
+      ]);
       setPaused(state.paused);
 
       spotPlayer.getCurrentState().then((state: any) => {
@@ -75,7 +83,7 @@ export const usePlayerContext = () => {
       });
     });
     spotPlayer.connect();
-  }, [session, waitForPlayer]);
+  }, [token, waitForPlayer]);
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -87,10 +95,41 @@ export const usePlayerContext = () => {
     initPlayer();
   }, []);
 
+  const togglePlay = useCallback(async () => {
+    await player?.togglePlay();
+  }, [player]);
+
+  const previous = useCallback(async () => {
+    await player?.previousTrack();
+  }, [player]);
+
+  const next = useCallback(async () => {
+    await player?.nextTrack();
+  }, [player]);
+
+  const shuffle = useCallback(async () => {
+    // TODO: add shuffle toggle
+    await fetcher("/me/player/shuffle", false, {
+      method: "PUT",
+      body: {
+        state: true,
+        device_id: deviceId,
+      },
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  }, [deviceId, token]);
+
   return {
     active,
-    player,
-    paused,
     currentTrack,
+    next,
+    paused,
+    player,
+    previous,
+    shuffle,
+    tracks,
+    togglePlay,
   };
 };

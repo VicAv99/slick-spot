@@ -1,21 +1,29 @@
+import { Track } from '@/utils';
 import { ActionIcon, Box } from '@mantine/core';
 import { FiPause, FiPlay, FiRepeat, FiShuffle, FiSkipBack, FiSkipForward } from 'react-icons/fi';
 
 interface PlayerControls {
-  player?: Spotify.Player;
   isPaused: boolean;
+  next?: () => Promise<void>;
+  previous?: () => Promise<void>;
+  shuffle?: () => Promise<void>;
+  tracks: Partial<[Track[], Track[]]>;
+  togglePlay?: () => Promise<void>;
 }
 
-export const PlayerControls = ({ player, isPaused }: PlayerControls) => {
-  const TogglePlayIcon = isPaused ? FiPlay : FiPause;
-  const wat = () => {
-    console.log("wat");
-    player?.togglePlay();
+export const PlayerControls = (props: PlayerControls) => {
+  const TogglePlayIcon = props.isPaused ? FiPlay : FiPause;
+  const [previous, next] = props.tracks;
+
+  const onPlayClicked = () => {
+    props.togglePlay?.();
   };
+
   return (
     <Box className="flex justify-center items-center">
       <ActionIcon
-        disabled
+        onClick={props.shuffle}
+        // disabled={!previous || !next}
         mr={10}
         size={40}
         variant="light"
@@ -25,17 +33,18 @@ export const PlayerControls = ({ player, isPaused }: PlayerControls) => {
         <FiShuffle className="ml-px" size={20} color="gray" />
       </ActionIcon>
       <ActionIcon
-        onClick={() => player?.previousTrack()}
+        onClick={props.previous}
         mx={10}
         size={40}
         variant="light"
         radius="xl"
         color="teal"
+        disabled={!previous?.length}
       >
         <FiSkipBack className="ml-px" size={20} color="gray" />
       </ActionIcon>
       <ActionIcon
-        onClick={wat}
+        onClick={onPlayClicked}
         mx={10}
         size={45}
         variant="light"
@@ -45,12 +54,13 @@ export const PlayerControls = ({ player, isPaused }: PlayerControls) => {
         <TogglePlayIcon className="ml-px" size={25} color="gray" />
       </ActionIcon>
       <ActionIcon
-        onClick={() => player?.nextTrack()}
+        onClick={props.next}
         mx={10}
         size={45}
         variant="light"
         radius="xl"
         color="teal"
+        disabled={!next?.length}
       >
         <FiSkipForward className="ml-px" size={25} color="gray" />
       </ActionIcon>

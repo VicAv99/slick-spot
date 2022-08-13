@@ -16,6 +16,6 @@ export const fetcher = async (
   const fullUrl = isLocal ? url : `${BASE_URL}${url}`;
   return await fetch(fullUrl, {
     ...opts,
-    ...(opts.body ? { body } : null),
+    ...(opts.body ? { body } : {}),
   } as RequestInit);
 };
