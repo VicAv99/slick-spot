@@ -1,6 +1,3 @@
-import { Header } from '@/components/Header';
-import { Player } from '@/components/player/Player';
-import { SideNav } from '@/components/SideNav';
 import Login from '@/pages/login';
 import { authActions, playlistActions, useAppDispatch } from '@/state';
 import { sessionExpired } from '@/utils';
@@ -8,6 +5,10 @@ import { AppShell, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import { useSession } from 'next-auth/react';
 import { PropsWithChildren, useEffect, useState } from 'react';
+
+import { Header } from './Header';
+import { WrappedPlayer } from './player/Player';
+import { SideNav } from './SideNav';
 
 export const Layout = ({ children }: PropsWithChildren<unknown>) => {
   const theme = useMantineTheme();
@@ -25,9 +26,9 @@ export const Layout = ({ children }: PropsWithChildren<unknown>) => {
   }, [dispatch, expired, session]);
 
   useEffect(() => {
-    if (expired) return;
+    if (expired || !session) return;
     dispatch(playlistActions.fetchPlaylists());
-  }, [dispatch, expired]);
+  }, [dispatch, expired, session]);
 
   useEffect(() => {
     setSidebarOpened(!isLargerScreen);
@@ -58,7 +59,7 @@ export const Layout = ({ children }: PropsWithChildren<unknown>) => {
             setSidebarOpened={setSidebarOpened}
           />
         }
-        footer={<Player />}
+        footer={<WrappedPlayer />}
         styles={(theme) => ({
           body: { height: `100%` },
           main: {
